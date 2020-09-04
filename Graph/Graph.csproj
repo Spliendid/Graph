@@ -36,7 +36,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdjList.cs" />
     <Compile Include="AdjMatrix.cs" />
+    <Compile Include="AdjSet.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="g.txt" />

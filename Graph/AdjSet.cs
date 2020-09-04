@@ -2,36 +2,33 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+
 namespace Graph
 {
-    /// <summary>
-    /// 图的邻接矩阵
-    /// </summary>
-    class AdjMatrix
+    class AdjSet
     {
-
         private int _v;//顶点
         public int V { get { return _v; } }
         private int _e;//边
         public int E { get { return _e; } }
-        private int[,] adj;//临接矩阵
-        public AdjMatrix(string fileName)
+        private HashSet<int>[] adj;//临接数组
+        public AdjSet(string fileName)
         {
             string[] info = File.ReadAllLines(fileName);
             try
             {
                 var s = info[0].Split(' ');
-                _v = int.Parse( s[0]);
-                if (_v<0)
+                _v = int.Parse(s[0]);
+                if (_v < 0) throw new Exception("V must be non-negative");
+                adj = new HashSet<int>[V];
+                for (int i = 0; i < _v; i++)
                 {
-                    throw new Exception("V must be non-negative");
+                    adj[i] = new HashSet<int>();
                 }
-                adj = new int[_v,_v];
+
                 _e = int.Parse(s[1]);
-                if (_e< 0)
-                {
-                    throw new Exception("V must be non-negative");
-                }
+                if (_e < 0) throw new Exception("V must be non-negative");
+
                 for (int i = 1; i < info.Length; i++)
                 {
                     s = info[i].Split(' ');
@@ -41,10 +38,10 @@ namespace Graph
                     ValidateVertex(b);
 
                     if (a == b) throw new Exception("Self Loop is Detected!");
-                    if (adj[a,b] == 1) throw new Exception("Parallel Edges is Detected!");
+                    if (adj[a].Contains(b)) throw new Exception("Parallel Edges is Detected!");
 
-                    adj[a, b] = 1;
-                    adj[b, a] = 1;
+                    adj[a].Add(b);
+                    adj[b].Add(a);
                 }
 
             }
@@ -57,7 +54,7 @@ namespace Graph
 
         private void ValidateVertex(int v)
         {
-            if (v<0 || v >= _v)
+            if (v < 0 || v >= _v)
             {
                 throw new Exception($"vertex {v} is invalid");
             }
@@ -73,7 +70,7 @@ namespace Graph
         {
             ValidateVertex(v);
             ValidateVertex(w);
-            return adj[v, w] == 1;
+            return adj[v].Contains(w);
         }
 
         /// <summary>
@@ -81,18 +78,11 @@ namespace Graph
         /// </summary>
         /// <param name="v"></param>
         /// <returns></returns>
-        public List<int> GetAdj(int v)
+        public HashSet<int> GetAdj(int v)
         {
             ValidateVertex(v);
-            List<int> res = new List<int>();
-            for (int i = 0; i < V; i++)
-            {
-                if (adj[v,i] == 1)
-                {
-                    res.Add(i);
-                }
-            }
-            return res;
+
+            return adj[v];
         }
 
         public int Degree(int v)
@@ -100,11 +90,11 @@ namespace Graph
             return GetAdj(v).Count;
         }
 
-        //public static void Main(string[] args)
-        //{
-        //    AdjMatrix adjMatrix = new AdjMatrix("g.txt");
-        //    Console.Write(adjMatrix.ToString());
-        //}
+        public static void Main(string[] args)
+        {
+            AdjSet adjset = new AdjSet("g.txt");
+            Console.Write(adjset.ToString());
+        }
 
         public override string ToString()
         {
@@ -112,9 +102,11 @@ namespace Graph
             sb.Append($"V = {_v}, E = {_e}\n");
             for (int i = 0; i < _v; i++)
             {
-                for (int j = 0; j < _v; j++)
+                sb.Append($"{i} : ");
+                foreach (var item in adj[i])
                 {
-                    sb.Append(adj[i,j]);
+                    sb.Append(item);
+                    sb.Append(' ');
                 }
                 sb.Append('\n');
             }
@@ -122,3 +114,4 @@ namespace Graph
         }
     }
 }
+
