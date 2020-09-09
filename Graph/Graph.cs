@@ -5,14 +5,14 @@ using System.Text;
 
 namespace Graph
 {
-    class AdjSet
+   public class Graph
     {
         private int _v;//顶点
         public int V { get { return _v; } }
         private int _e;//边
         public int E { get { return _e; } }
         private HashSet<int>[] adj;//临接数组
-        public AdjSet(string fileName)
+        public Graph(string fileName)
         {
             string[] info = File.ReadAllLines(fileName);
             try
@@ -90,7 +90,11 @@ namespace Graph
             return GetAdj(v).Count;
         }
 
-      
+        public static void Main(string[] args)
+        {
+            Graph adjset = new Graph("g.txt");
+            Console.Write(adjset.ToString());
+        }
 
         public override string ToString()
         {

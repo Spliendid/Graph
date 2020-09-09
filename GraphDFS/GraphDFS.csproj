@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{7ECB4591-0528-49FE-BE14-678909291D03}</ProjectGuid>
+    <ProjectGuid>{A13BF7BB-BDB1-45C9-8A01-35F09589145E}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>Graph</RootNamespace>
-    <AssemblyName>Graph</AssemblyName>
+    <RootNamespace>GraphDFS</RootNamespace>
+    <AssemblyName>GraphDFS</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -36,13 +36,13 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AdjList.cs" />
-    <Compile Include="AdjMatrix.cs" />
-    <Compile Include="AdjSet.cs" />
-    <Compile Include="Graph.cs" />
+    <Compile Include="GraphDFS.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="g.txt" />
+    <ProjectReference Include="..\Graph\Graph.csproj">
+      <Project>{7ecb4591-0528-49fe-be14-678909291d03}</Project>
+      <Name>Graph</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
