@@ -7,7 +7,9 @@ namespace GraphDFS
     {
         private Graph.Graph G;
         private bool[] visited;
+        //深度优先先序遍历
         private List<int> Pre_order = new List<int>();
+        //深度优先后序遍历
         private List<int> Post_order = new List<int>();
 
         public GraphDFS(Graph.Graph g)

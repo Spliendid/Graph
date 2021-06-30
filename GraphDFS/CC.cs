@@ -74,7 +74,7 @@ namespace GraphDFS
             return res;
         }
 
-        public static void Main(string[] arg)
+        public static void Main1(string[] arg)
         {
             Graph.Graph graph = new Graph.Graph("g.txt");
             CC cc = new CC(graph);
